@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC Demo</title>
+
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;500;700&display=swap');
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    * {
+      font-family: 'Roboto Condensed', sans-serif;
+    }
+
+    .dtabx {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      flex-direction: row;
+    }
+
+    .svd {
+      height: 200px;
+      width: 200px;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    .upbx {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+
+    .dBx {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      flex-direction: column;
+    }
+
+    .th {
+      height: 200px;
+      width: 200px;
+      box-sizing: border-box;
+      background-color: #d8d8d878;
+      margin-bottom: 20px;
+      margin-top: 20px;
+      margin-right: 30px;
+      border-radius: 20px;
+    }
+
+    .th1 {
+      height: 200px;
+      width: 200px;
+      box-sizing: border-box;
+      background-color: #d8d8d878;
+      margin-bottom: 20px;
+      margin-top: 20px;
+      margin-right: 30px;
+      border-radius: 20px;
+      padding: 5px;
+      overflow: scroll;
+    }
+
+    .th2 {
+      height: 200px;
+      width: 200px;
+      box-sizing: border-box;
+      background-color: #d8d8d878;
+      margin-bottom: 20px;
+      margin-top: 20px;
+      margin-right: 30px;
+      border-radius: 20px;
+      padding: 5px;
+      overflow: scroll;
+    }
+
+    .dta {
+      font-size: 45px;
+    }
+
+    .checkbtn {
+      width: 100px;
+      height: 40px;
+      border-radius: 15px;
+      background-color: rgb(255, 68, 68);
+      cursor: pointer;
+    }
+
+    .checkbtn1 {
+      width: 180px;
+      height: 40px;
+      margin: 2px;
+      border-radius: 15px;
+      color: #fff;
+      background-color: rgb(29, 29, 29);
+      cursor: pointer;
+    }
+
+
+    .cnt h1 {
+      font-size: 160px;
+      color: #ffff;
+      font-weight: 600;
+    }
+
+    .cnt {
+      display: flex;
+      justify-content: space-between;
+    }
+
+
+
+    .aBtn {
+      width: 150px;
+      text-decoration: none;
+      display: inline-block;
+      color: #ffff;
+      font-size: 24px;
+      border: 2px solid #fff;
+      padding: 40px 20px;
+      border-radius: 30px;
+      margin-top: 20px;
+      background-color: #00000082;
+    }
+
+    .a2 {
+      margin-right: 10px;
+      margin-top: 80px;
+    }
+
+    .a3 {
+      margin-top: 80px;
+    }
+
+    .btns {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .bvd {
+      width: 1600px;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      background-size: auto;
+
+    }
+
+
+
+    .cntr {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+
+
+
+    @media only screen and (min-width: 900px) and (max-width: 1024px) {
+      .bvd {
+        width: 980px;
+        height: 455px;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        background-size: auto;
+        object-fit: cover;
+      }
+
+      .dtabx {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        flex-direction: row;
+      }
+
+      .th {
+        height: 115px;
+        width: 120px;
+        box-sizing: border-box;
+        background-color: #d8d8d878;
+        margin-bottom: 20px;
+        margin-top: 14px;
+        margin-right: 30px;
+        border-radius: 20px;
+      }
+
+      .th1 {
+        height: 115px;
+        width: 120px;
+        box-sizing: border-box;
+        background-color: #d8d8d878;
+        margin-bottom: 20px;
+        margin-top: 14px;
+        margin-right: 30px;
+        border-radius: 20px;
+        padding: 5px;
+        overflow: scroll;
+      }
+
+      .checkbtn {
+        width: 61px;
+        height: 24px;
+        font-size: 20px;
+        border-radius: 7px;
+        background-color: rgb(255, 68, 68);
+        border: none;
+      }
+
+      .checkbtn1 {
+        width: 100px;
+        height: 24px;
+        font-size: 15px;
+        border-radius: 7px;
+        color: #fff;
+        background-color: rgb(29, 29, 29);
+        cursor: pointer;
+        border: none;
+        overflow: hidden;
+      }
+
+      .aBtn {
+        width: 72px;
+        height: 7px;
+        text-decoration: none;
+        display: grid;
+        align-items: center;
+        color: #ffff;
+        font-size: 10px;
+        border: 2px solid #fff;
+        padding: 20px 13px;
+        border-radius: 15px;
+        margin-top: 20px;
+        background-color: #00000082;
+      }
+
+      .a2 {
+        margin-right: 10px;
+        margin-top: 53px;
+      }
+
+      .a3 {
+        margin-top: 53px;
+      }
+
+      .dBx {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+      }
+
+      .bnms {
+        font-size: 15px;
+      }
+
+      .dta {
+        font-size: 17px;
+      }
+
+      @media only screen and (min-width: 700px) and (max-width: 800px) {
+        .bvd {
+          width: 980px;
+          height: 550px;
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          z-index: -1;
+          background-size: auto;
+          object-fit: cover;
+        }
+
+      }
+
+
+    }
+
+
+    @media only screen and (max-width: 768px) {
+      .bvd {
+        width: 667px;
+        height: 550px;
+        object-fit: cover;
+        /* position: absolute;
+              right: 0;
+              bottom: 0;
+              z-index: -1;
+              background-size: auto; */
+
+      }
+
+      .th {
+        height: 90px;
+        width: 105px;
+        box-sizing: border-box;
+        background-color: #d8d8d878;
+        margin-bottom: 20px;
+        margin-top: 14px;
+        margin-right: 30px;
+        border-radius: 20px;
+      }
+
+      .checkbtn {
+        width: 55px;
+        height: 20px;
+        font-size: 17px;
+        border-radius: 7px;
+        background-color: rgb(255, 68, 68);
+        border: none;
+      }
+
+
+      .aBtn {
+        width: 65px;
+        height: 5px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffff;
+        font-size: 10px;
+        border: 2px solid #fff;
+        padding: 17px 9px;
+        border-radius: 13px;
+        margin-top: 20px;
+        background-color: #00000082;
+      }
+
+
+      .cnt {
+        display: flex;
+        justify-content: space-between;
+        margin-top: -7px;
+      }
+
+      .a2 {
+        margin-right: 10px;
+        margin-top: 53px;
+      }
+
+      .a3 {
+        margin-top: 53px;
+      }
+
+      .dBx {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+      }
+
+      .bnms {
+        font-size: 15px;
+      }
+
+      .dta {
+        font-size: 17px;
+      }
+
+
+    }
+
+    @media only screen and (min-width:1024px) and (max-width: 1440px) {
+      .bvd {
+        width: 1180px;
+        height: 820px;
+        object-fit: fill;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        background-size: auto;
+
+      }
+
+      .th {
+        height: 180px;
+        width: 180px;
+        box-sizing: border-box;
+        background-color: #d8d8d878;
+        margin-bottom: 20px;
+        margin-top: 14px;
+        margin-right: 30px;
+        border-radius: 20px;
+        /* background-blend-mode: darken; */
+      }
+
+      .th1 {
+        height: 180px;
+        width: 180px;
+        box-sizing: border-box;
+        background-color: #d8d8d878;
+        margin-bottom: 20px;
+        margin-top: 14px;
+        margin-right: 30px;
+        border-radius: 20px;
+        /* background-blend-mode: darken; */
+      }
+
+      .checkbtn {
+        width: 100px;
+        height: 45px;
+        font-size: 25px;
+        border-radius: 7px;
+        background-color: rgb(255, 68, 68);
+        border: none;
+      }
+
+      .checkbtn1 {
+        width: 165px;
+        height: 30px;
+        font-size: 20px;
+        border-radius: 7px;
+        background-color: rgb(29, 29, 29);
+        cursor: pointer;
+        border: none;
+        overflow: hidden;
+      }
+
+      .cnt {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 230px;
+      }
+
+
+      .aBtn {
+        width: 100px;
+        height: 54px;
+        text-decoration: none;
+        display: grid;
+        align-items: center;
+        color: #ffff;
+        font-size: 15px;
+        border: 2px solid #fff;
+        padding: 10px 16px;
+        border-radius: 15px;
+        margin-top: 19px;
+        background-color: #00000082;
+      }
+
+      .a2 {
+        margin-right: 10px;
+        margin-top: 58px;
+      }
+
+      .a3 {
+        margin-top: 58px;
+      }
+
+
+      .dBx {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+      }
+
+      .bnms {
+        font-size: 20px;
+      }
+
+      .dta {
+        font-size: 30px;
+      }
+
+      @media only screen and (min-width:1020px) and (max-width: 1024px) {
+
+        .bvd {
+          width: 1024px;
+          height: 768px;
+          object-fit: fill;
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          z-index: -1;
+          background-size: auto;
+
+        }
+
+        .th {
+          height: 145px;
+          width: 145px;
+          box-sizing: border-box;
+          background-color: #d8d8d878;
+          margin-bottom: 20px;
+          margin-top: 14px;
+          margin-right: 30px;
+          border-radius: 20px;
+          /* background-blend-mode: darken; */
+        }
+
+        .th1 {
+          height: 145px;
+          width: 145px;
+          box-sizing: border-box;
+          background-color: #d8d8d878;
+          margin-bottom: 20px;
+          margin-top: 14px;
+          margin-right: 30px;
+          border-radius: 20px;
+          /* background-blend-mode: darken; */
+        }
+
+        .checkbtn {
+          width: 100px;
+          height: 45px;
+          font-size: 25px;
+          border-radius: 7px;
+          background-color: rgb(255, 68, 68);
+          border: none;
+        }
+
+        .checkbtn1 {
+          width: 125px;
+          height: 30px;
+          font-size: 20px;
+          border-radius: 7px;
+          background-color: rgb(29, 29, 29);
+          cursor: pointer;
+          border: none;
+          overflow: hidden;
+        }
+
+      }
+    }
+
+    @media only screen and (min-width:1366px) and (max-width: 1440px) {
+      .bvd {
+        width: 1366px;
+        height: 1024px;
+        object-fit: fill;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        background-size: auto;
+
+      }
+
+      .th {
+        height: 250px;
+        width: 260px;
+        box-sizing: border-box;
+        background-color: #d8d8d878;
+        margin-bottom: 20px;
+        margin-top: 14px;
+        margin-right: 30px;
+        border-radius: 20px;
+        /* background-blend-mode: darken; */
+      }
+
+      .th1 {
+        height: 250px;
+        width: 260px;
+        box-sizing: border-box;
+        background-color: #d8d8d878;
+        margin-bottom: 20px;
+        margin-top: 14px;
+        margin-right: 30px;
+        border-radius: 20px;
+        /* background-blend-mode: darken; */
+      }
+
+      .checkbtn {
+        width: 140px;
+        height: 70px;
+        font-size: 38px;
+        border-radius: 19px;
+        background-color: rgb(255, 68, 68);
+        border: none;
+      }
+
+      .checkbtn1 {
+        width: 240px;
+        height: 45px;
+        font-size: 0px;
+        border-radius: 7px;
+        background-color: rgb(29, 29, 29);
+        cursor: pointer;
+        border: none;
+        overflow: hidden;
+      }
+
+
+
+      .cnt {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 230px;
+      }
+
+
+      .aBtn {
+        width: 135px;
+        height: 80px;
+        text-decoration: none;
+        display: grid;
+        align-items: center;
+        color: #ffff;
+        font-size: 25px;
+        border: 2px solid #fff;
+        padding: 10px 16px;
+        border-radius: 15px;
+        margin-top: 19px;
+        background-color: #00000082;
+      }
+
+      .a2 {
+        margin-right: 10px;
+        margin-top: 68px;
+      }
+
+      .a3 {
+        margin-top: 68px;
+      }
+
+
+      .dBx {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+      }
+
+      .bnms {
+        font-size: 35px;
+      }
+
+      .dta {
+        font-size: 50px;
+      }
+
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- <h2>1. Start your Webcam</h2>
+    <div class="videos">
+      <span>
+        <h3>Local Stream</h3>
+        <video id="webcamVideo" autoplay playsinline></video>
+      </span>
+      <span>
+        <h3>Remote Stream</h3>
+        <video id="remoteVideo" autoplay playsinline></video>
+      </span>
+
+
+    </div>
+
+    <button id="webcamButton">Start webcam</button>
+    <h2>2. Create a new Call</h2>
+    <button id="callButton" disabled>Create Call (offer)</button>
+
+    <h2>3. Join a Call</h2>
+    <p>Answer the call from a different browser window or device</p>
+    
+    <input id="callInput" />
+    <button id="answerButton" disabled>Answer</button>
+
+    <h2>4. Hangup</h2>
+
+    <button id="hangupButton" disabled>Hangup</button> -->
+
+
+
+
+
+
+  <div class="hm">
+    <video id="remoteVideo" class="bvd" autoplay playsinline></video>
+
+    <div class="dtabx">
+      <div class="dBx">
+        <div class="upbx">
+          <div class="th">
+            <video id="webcamVideo" class="svd" autoplay playsinline></video>
+          </div>
+          <div class="th2">
+            <button id="webcamButton">Start webcam</button>
+            <h2>2. Create a new Call</h2>
+            <button id="callButton" disabled>Create Call (offer)</button>
+
+            <h2>3. Join a Call</h2>
+            <p>Answer the call from a different browser window or device</p>
+
+            <input id="callInput" />
+            <button id="answerButton" disabled>Answer</button>
+
+            <h2>4. Hangup</h2>
+
+            <button id="hangupButton" disabled>Hangup</button>
+          </div>
+        </div>
+
+
+        <div class="th1" id="place_location">
+
+        </div>
+
+
+      </div>
+
+      <div class="dBx">
+        <div class="th">
+          <center>
+            <h3 class="bnms">Heart Rate</h3>
+          </center>
+          <center>
+            <h1 class="dta">74 bpm</h1>
+          </center>
+          <center><button class="checkbtn" onclick="send_now({'type':'command','data':'checkup'})">Check</button>
+          </center>
+        </div>
+        <div class="th">
+          <center>
+            <h3 class="bnms">Temprature</h3>
+          </center>
+          <center>
+            <h1 class="dta">34&#8451;</h1>
+          </center>
+          <center><button class="checkbtn" onclick="send_now({'type':'command','data':'teleoperation'})">Check</button>
+          </center>
+        </div>
+
+
+      </div>
+    </div>
+
+
+
+    <div class="cnt">
+
+
+
+      <div class="btns">
+        <button id="lgn" onclick="send_now({'type':'command','data':'left'})" class="aBtn a2">
+          LEFT
+        </button>
+        <div class="btns2" style="margin-right: 10px;  display: flex; flex-direction: column;">
+          <button id="lgn" class="aBtn" onclick="send_now({'type':'command','data':'forward'})">
+            FOREWARD
+          </button>
+          <button class="aBtn" onclick="send_now({'type':'command','data':'backward'})">
+            BACKWARD
+
+          </button>
+        </div>
+
+        <button id="lgn" class="aBtn a3" onclick="send_now({'type':'command','data':'right'})">
+          RIGHT
+        </button>
+
+      </div>
+      <div class="btns" style="margin-left: 20px; margin-right: 10px;">
+        <button id="lgn" class="aBtn a2" onclick="send_now({'type':'command','data':'stop'})">
+          stop
+        </button>
+        <button id="lgn" class="aBtn a2" onclick="send_now({'type':'command','data':'grab'})">
+          GRAB
+        </button>
+        <button id="lgn" class="aBtn a2" onclick="send_now({'type':'command','data':'leave'})">
+          LEAVE
+        </button>
+
+
+
+      </div>
+      <div class="btns lbtns">
+        <button id="lgn" class="aBtn a2" onclick="send_now({'type':'command','data':'arm_left'})">
+          LEFT
+        </button>
+        <div class="btns2" style="margin-right: 10px;  display: flex; flex-direction: column;">
+          <button id="lgn" class="aBtn" onclick="send_now({'type':'command','data':'arm_forward'})">
+            FOREWARD
+          </button>
+          <button class="aBtn" onclick="send_now({'type':'command','data':'arm_backward'})">
+            BACKWARD
+
+          </button>
+        </div>
+
+        <button id="lgn" class="aBtn a3" onclick="send_now({'type':'command','data':'arm_right'})">
+          RIGHT
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- <script type="module" src="/main.js"></script> -->
+
+  <script>
+    import './style.css';
+
+    import firebase from 'firebase/app';
+    import 'firebase/firestore';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAQRjT5ysjFYlG7Cu8k2hxvp9Fnx4w60NU",
+      authDomain: "vid-call-56564.firebaseapp.com",
+      projectId: "vid-call-56564",
+      storageBucket: "vid-call-56564.appspot.com",
+      messagingSenderId: "536915323864",
+      appId: "1:536915323864:web:44927f2b14aa89575660ad",
+      measurementId: "G-5C4Y6PGB10"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const firestore = firebase.firestore();
+
+    const servers = {
+      iceServers: [
+        {
+          urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
+        },
+      ],
+      iceCandidatePoolSize: 10,
+    };
+
+    // Global State
+    const pc = new RTCPeerConnection(servers);
+    let localStream = null;
+    let remoteStream = null;
+
+    // HTML elements
+    const webcamButton = document.getElementById('webcamButton');
+    const webcamVideo = document.getElementById('webcamVideo');
+    const callButton = document.getElementById('callButton');
+    const callInput = document.getElementById('callInput');
+    const answerButton = document.getElementById('answerButton');
+    const remoteVideo = document.getElementById('remoteVideo');
+    const hangupButton = document.getElementById('hangupButton');
+
+    // 1. Setup media sources
+
+    webcamButton.onclick = async () => {
+      localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      remoteStream = new MediaStream();
+
+      // Push tracks from local stream to peer connection
+      localStream.getTracks().forEach((track) => {
+        pc.addTrack(track, localStream);
+      });
+
+      // Pull tracks from remote stream, add to video stream
+      pc.ontrack = (event) => {
+        event.streams[0].getTracks().forEach((track) => {
+          remoteStream.addTrack(track);
+        });
+      };
+
+      webcamVideo.srcObject = localStream;
+      remoteVideo.srcObject = remoteStream;
+
+      callButton.disabled = false;
+      answerButton.disabled = false;
+      webcamButton.disabled = true;
+    };
+
+    // 2. Create an offer
+    callButton.onclick = async () => {
+      // Reference Firestore collections for signaling
+      const callDoc = firestore.collection('calls').doc();
+      const offerCandidates = callDoc.collection('offerCandidates');
+      const answerCandidates = callDoc.collection('answerCandidates');
+
+      callInput.value = callDoc.id;
+
+      // Get candidates for caller, save to db
+      pc.onicecandidate = (event) => {
+        event.candidate && offerCandidates.add(event.candidate.toJSON());
+      };
+
+      // Create offer
+      const offerDescription = await pc.createOffer();
+      await pc.setLocalDescription(offerDescription);
+
+      const offer = {
+        sdp: offerDescription.sdp,
+        type: offerDescription.type,
+      };
+
+      await callDoc.set({ offer });
+
+      // Listen for remote answer
+      callDoc.onSnapshot((snapshot) => {
+        const data = snapshot.data();
+        if (!pc.currentRemoteDescription && data?.answer) {
+          const answerDescription = new RTCSessionDescription(data.answer);
+          pc.setRemoteDescription(answerDescription);
+        }
+      });
+
+      // When answered, add candidate to peer connection
+      answerCandidates.onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === 'added') {
+            const candidate = new RTCIceCandidate(change.doc.data());
+            pc.addIceCandidate(candidate);
+          }
+        });
+      });
+
+      hangupButton.disabled = false;
+    };
+
+    // 3. Answer the call with the unique ID
+    answerButton.onclick = async () => {
+      const callId = callInput.value;
+      const callDoc = firestore.collection('calls').doc(callId);
+      const answerCandidates = callDoc.collection('answerCandidates');
+      const offerCandidates = callDoc.collection('offerCandidates');
+
+      pc.onicecandidate = (event) => {
+        event.candidate && answerCandidates.add(event.candidate.toJSON());
+      };
+
+      const callData = (await callDoc.get()).data();
+
+      const offerDescription = callData.offer;
+      await pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
+
+      const answerDescription = await pc.createAnswer();
+      await pc.setLocalDescription(answerDescription);
+
+      const answer = {
+        type: answerDescription.type,
+        sdp: answerDescription.sdp,
+      };
+
+      await callDoc.update({ answer });
+
+      offerCandidates.onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          console.log(change);
+          if (change.type === 'added') {
+            let data = change.doc.data();
+            pc.addIceCandidate(new RTCIceCandidate(data));
+          }
+        });
+      });
+    };
+
+
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>

@@ -5,6 +5,12 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
+    "dev-webpack": "webpack-dev-server --hot --mode development",
+    "clean": "rm -rf ./dist",
+    "dev": "npm run clean && npm run compile-dev && cross-env NODE_ENV=development nodemon --exec babel-node src/server/server.js --ignore ./src/client",
+    "compile-dev": "NODE_ENV=development webpack -d --config ./webpack.config.babel.js --progress",    
+    "compile": "NODE_ENV=production webpack -p --config ./webpack.config.babel.js --progress",
+    "start": "npm run clean && npm run compile && cross-env NODE_ENV=production babel-node src/server/server.js --ignore ./src/client"
   },
   "devDependencies": {
     "vite": "^2.9.16"
